@@ -2,6 +2,7 @@ import time
 from urllib.parse import quote
 
 import pandas as pd
+import plotly.graph_objects as go
 import requests
 import streamlit as st
 
@@ -44,6 +45,24 @@ p, label, span, div {font-family:'Inter',sans-serif;}
   border:1px solid rgba(91,190,218,.22); border-radius:16px;
   padding:18px 20px; box-shadow:0 10px 30px rgba(0,0,0,.18);
 }
+.hex-panel-title {font-family:'Cinzel',serif;color:#d9f2fb;font-size:1.05rem;font-weight:700;margin:.3rem 0 .2rem;}
+.champion-card,.match-card {display:flex;align-items:center;gap:16px;padding:15px 17px;margin:9px 0;
+  border:1px solid rgba(91,190,218,.19);border-radius:14px;background:linear-gradient(120deg,rgba(12,34,53,.92),rgba(8,23,39,.88));
+  box-shadow:0 7px 22px rgba(0,0,0,.14);transition:border-color .2s,transform .2s;}
+.champion-card:hover,.match-card:hover {border-color:rgba(75,207,220,.48);transform:translateY(-1px);}
+.champion-icon,.match-icon {width:52px;height:52px;border-radius:11px;border:1px solid rgba(93,207,220,.45);object-fit:cover;}
+.champion-main {flex:1;min-width:120px;}
+.champion-name,.match-champion {font-weight:800;color:#e8f6fc;font-size:1rem;}
+.champion-meta,.match-champion span {font-size:.76rem;color:#8eabba;margin-top:4px;}
+.champion-stat,.match-detail {min-width:90px;text-align:right;display:flex;flex-direction:column;gap:4px;}
+.champion-stat strong,.match-detail strong {font-size:.96rem;color:#d7f2fa;}
+.champion-stat span,.match-detail span {font-size:.7rem;color:#8ca9ba;}
+.match-card {justify-content:space-between;flex-wrap:wrap;padding:15px 18px;}
+.match-identity {display:flex;align-items:center;gap:13px;min-width:220px;flex:1;}
+.match-result {font-size:.72rem;font-weight:800;letter-spacing:.07em;}
+.match-result span {font-weight:500;color:#91aaba;letter-spacing:0;}
+.match-id {font-size:.66rem;color:#67889b;max-width:145px;overflow-wrap:anywhere;text-align:right;}
+@media(max-width:760px){.champion-card,.match-card{gap:10px;}.champion-stat,.match-detail{min-width:70px}.match-id{display:none}.champion-icon,.match-icon{width:43px;height:43px;}}
 .metric-label {font-size:.76rem;color:#9bb8c8;text-transform:uppercase;letter-spacing:.07em;font-weight:700;}
 .metric-value {font-size:1.75rem;color:#bcefff;font-weight:800;margin-top:.2rem;}
 .metric-help {font-size:.78rem;color:#829eaf;margin-top:.15rem;}
@@ -282,22 +301,29 @@ def aggregate_champions(games):
     return pd.DataFrame(rows).sort_values(["Partidas", "Win rate"], ascending=False) if rows else pd.DataFrame()
 
 
-def render_route_metrics(games, route):
+def render_route_metrics(games, route, route_games=None):
+    import html
+    import plotly.graph_objects as go
+    from plotly.subplots import make_subplots
+
     n = len(games)
     if not n:
         st.info("Nenhuma partida encontrada para esta rota no histórico consultado.")
         return
+
     wins = sum(g["win"] for g in games)
     kills, deaths, assists = (total(games, k) for k in ("kills", "deaths", "assists"))
     wr = 100 * wins / n
     kda = (kills + assists) / max(deaths, 1)
+
+    st.markdown('<div class="section-kicker">Resumo de desempenho</div>', unsafe_allow_html=True)
     base = st.columns(4)
     render_metric(base[0], "Partidas", str(n), f"{wins} vitórias · {n-wins} derrotas")
     render_metric(base[1], "Taxa de vitória", fmt(wr, 1, "%"), "Nas partidas filtradas")
     render_metric(base[2], "KDA médio", fmt(kda, 2), f"{kills/n:.1f} / {deaths/n:.1f} / {assists/n:.1f}")
     render_metric(base[3], "Ouro por minuto", fmt(average(games, "gold_per_min"), 0), "Média por partida")
 
-    st.markdown("#### Métricas específicas da rota")
+    st.markdown('<div class="section-kicker" style="margin-top:1.6rem">Métricas específicas da rota</div>', unsafe_allow_html=True)
     if route == "JUNGLE":
         cols = st.columns(4)
         render_metric(cols[0], "Dragões", fmt(average(games, "dragons"), 1), "Média por partida")
@@ -307,7 +333,7 @@ def render_route_metrics(games, route):
     elif route == "BOTTOM":
         cols = st.columns(4)
         render_metric(cols[0], "Dano a campeões", fmt(average(games, "damage_champions"), 0), "Média por partida")
-        render_metric(cols[1], "Dano por minuto", fmt(average(games, "damage_per_min"), 0), "Estimativa de DPS/min")
+        render_metric(cols[1], "Dano por minuto", fmt(average(games, "damage_per_min"), 0), "Dano/min")
         render_metric(cols[2], "Farm por minuto", fmt(average(games, "cs_per_min"), 2), "CS/min")
         render_metric(cols[3], "Dano a estruturas", fmt(average(games, "damage_buildings"), 0), "Dano a torres e edifícios")
     elif route == "MIDDLE":
@@ -331,38 +357,134 @@ def render_route_metrics(games, route):
         render_metric(cols[2], "Wards de controle compradas", fmt(average(games, "control_wards"), 1), "Média por partida")
         render_metric(cols[3], "Curas / escudos em aliados", f'{fmt(average(games,"healing_teammates"),0)} / {fmt(average(games,"shielding_teammates"),0)}', "Média por partida")
 
-    champs_df = aggregate_champions(games)
-    st.markdown("#### Campeões nesta rota")
-    st.dataframe(
-        champs_df.style.format({
-            "Win rate": "{:.1f}%", "KDA": "{:.2f}", "Abates médios": "{:.1f}",
-            "Mortes médias": "{:.1f}", "Assistências médias": "{:.1f}",
-        }),
-        use_container_width=True, hide_index=True,
-    )
-    if not champs_df.empty:
-        st.bar_chart(champs_df.set_index("Campeão")[["Partidas"]])
+    # Painel de gráficos com tema Hextech. O radar usa índices relativos ao melhor
+    # valor observado no conjunto da rota, sem afirmar comparação com outros jogadores.
+    comparison_games = route_games or games
+    chart_left, chart_right = st.columns([1, 1.35], gap="large")
+    with chart_left:
+        st.markdown('<div class="hex-panel-title">Radar de atributos</div>', unsafe_allow_html=True)
+        if route == "JUNGLE":
+            metric_fields = [("Visão", "vision_score"), ("Dano", "damage_champions"),
+                             ("Objetivos", "dragons"), ("Farm", "cs_per_min"),
+                             ("Participação", "kp"), ("Sobrevivência", "damage_taken")]
+        elif route == "BOTTOM":
+            metric_fields = [("Dano", "damage_champions"), ("Dano/min", "damage_per_min"),
+                             ("Farm", "cs_per_min"), ("Estruturas", "damage_buildings"),
+                             ("Visão", "vision_score"), ("Participação", "kp")]
+        elif route == "MIDDLE":
+            metric_fields = [("Dano", "damage_champions"), ("Farm", "cs_per_min"),
+                             ("Participação", "kp"), ("Visão", "vision_score"),
+                             ("Ouro/min", "gold_per_min"), ("Sobrevivência", "damage_taken")]
+        elif route == "TOP":
+            metric_fields = [("Dano recebido", "damage_taken"), ("Estruturas", "damage_buildings"),
+                             ("Farm", "cs_per_min"), ("Ouro/min", "gold_per_min"),
+                             ("Visão", "vision_score"), ("Participação", "kp")]
+        else:
+            metric_fields = [("Visão", "vision_score"), ("Wards", "wards_placed"),
+                             ("Wards destruídas", "wards_killed"), ("Assistências", "assists"),
+                             ("Cura", "healing_teammates"), ("Escudos", "shielding_teammates")]
 
-    st.markdown("#### Histórico de partidas")
-    history_rows = []
+        radar_values = []
+        for _, field in metric_fields:
+            current = average(games, field) or 0
+            reference = max([average(comparison_games, field) or 0, 0.0001])
+            radar_values.append(min(100, current / reference * 100))
+        radar = go.Figure()
+        radar.add_trace(go.Scatterpolar(
+            r=radar_values + radar_values[:1],
+            theta=[x[0] for x in metric_fields] + [metric_fields[0][0]],
+            fill="toself", fillcolor="rgba(56,189,248,0.18)",
+            line=dict(color="#42d6d0", width=2.5),
+            marker=dict(size=6, color="#9cecf0"),
+            hovertemplate="%{theta}: %{r:.0f}/100<extra></extra>",
+        ))
+        radar.update_layout(
+            height=330, margin=dict(l=35, r=35, t=20, b=20),
+            paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
+            showlegend=False, font=dict(color="#c5dbe8", family="Inter"),
+            polar=dict(
+                bgcolor="rgba(9,27,44,.45)",
+                radialaxis=dict(visible=True, range=[0,100], showticklabels=False,
+                                gridcolor="rgba(125,190,215,.16)", linecolor="rgba(125,190,215,.18)"),
+                angularaxis=dict(gridcolor="rgba(125,190,215,.16)", linecolor="rgba(125,190,215,.18)",
+                                 tickfont=dict(size=10, color="#a9c7d8")),
+            ),
+        )
+        st.plotly_chart(radar, use_container_width=True, config={"displayModeBar": False})
+        st.caption("Índice relativo: cada atributo é comparado ao maior valor médio observado nas partidas desta rota.")
+
+    with chart_right:
+        st.markdown('<div class="hex-panel-title">Evolução do KDA</div>', unsafe_allow_html=True)
+        recent = sorted(games, key=lambda g: g.get("game_creation", 0))[-10:]
+        labels = [f"Jogo {i+1}" for i in range(len(recent))]
+        kdas = [(g["kills"] + g["assists"]) / max(g["deaths"], 1) for g in recent]
+        line = go.Figure()
+        line.add_trace(go.Scatter(
+            x=labels, y=kdas, mode="lines+markers",
+            line=dict(color="#54c8e8", width=3, shape="spline"),
+            marker=dict(size=8, color="#65e0d6", line=dict(color="#d9fbff", width=1.5)),
+            fill="tozeroy", fillcolor="rgba(56,189,248,.10)",
+            hovertemplate="%{x}<br>KDA: %{y:.2f}<extra></extra>",
+        ))
+        line.add_hline(y=kda, line_dash="dot", line_color="#c8aa6e",
+                       annotation_text=f"Média {kda:.2f}", annotation_font_color="#d8c18d")
+        line.update_layout(
+            height=330, margin=dict(l=15, r=15, t=28, b=25),
+            paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
+            font=dict(color="#a9c7d8", family="Inter"),
+            xaxis=dict(showgrid=False, linecolor="rgba(125,190,215,.2)"),
+            yaxis=dict(title=None, gridcolor="rgba(125,190,215,.12)", zeroline=False),
+            showlegend=False,
+        )
+        st.plotly_chart(line, use_container_width=True, config={"displayModeBar": False})
+
+    # Campeões em cartões visuais em vez de tabela.
+    champs_df = aggregate_champions(games)
+    st.markdown('<div class="section-kicker" style="margin-top:1.4rem">Campeões nesta rota</div>', unsafe_allow_html=True)
+    if champs_df.empty:
+        st.info("Ainda não há campeões para exibir.")
+    else:
+        for _, row in champs_df.iterrows():
+            champ = html.escape(str(row["Campeão"]))
+            wr_value = float(row["Win rate"])
+            wr_color = "#59d8bd" if wr_value >= 50 else "#f08a9b"
+            champ_icon = f"https://ddragon.leagueoflegends.com/cdn/15.1.1/img/champion/{quote(champ.replace(' ', ''), safe='')}.png"
+            st.markdown(
+                f'<div class="champion-card">'
+                f'<img src="{champ_icon}" class="champion-icon" onerror="this.style.display=\'none\'">'
+                f'<div class="champion-main"><div class="champion-name">{champ}</div>'
+                f'<div class="champion-meta">{int(row["Partidas"])} partidas · {int(row["Vitórias"])}V {int(row["Derrotas"])}D</div></div>'
+                f'<div class="champion-stat"><strong style="color:{wr_color}">{wr_value:.1f}%</strong><span>Win rate</span></div>'
+                f'<div class="champion-stat"><strong>{row["KDA"]:.2f}</strong><span>KDA</span></div>'
+                f'<div class="champion-stat"><strong>{row["Abates médios"]:.1f}/{row["Mortes médias"]:.1f}/{row["Assistências médias"]:.1f}</strong><span>K / D / A médio</span></div>'
+                f'</div>',
+                unsafe_allow_html=True,
+            )
+
+    # Histórico como cards individuais com faixa de vitória/derrota.
+    st.markdown('<div class="section-kicker" style="margin-top:1.6rem">Histórico de partidas</div>', unsafe_allow_html=True)
     for game in sorted(games, key=lambda g: g.get("game_creation", 0), reverse=True):
-        history_rows.append({
-            "Resultado": "Vitória" if game["win"] else "Derrota",
-            "Campeão": game["champion"],
-            "Adversário na rota": game["enemy_champion"],
-            "K / D / A": f'{game["kills"]} / {game["deaths"]} / {game["assists"]}',
-            "KDA": (game["kills"] + game["assists"]) / max(game["deaths"], 1),
-            "CS": game["cs"],
-            "CS/min": game["cs_per_min"],
-            "Duração (min)": game["duration_min"],
-            "Modo": game["game_mode"],
-            "ID da partida": game["match_id"],
-        })
-    history_df = pd.DataFrame(history_rows)
-    st.dataframe(
-        history_df.style.format({"KDA": "{:.2f}", "CS/min": "{:.2f}", "Duração (min)": "{:.1f}"}),
-        use_container_width=True, hide_index=True,
-    )
+        won = game["win"]
+        accent = "#39c9b0" if won else "#e87991"
+        result = "VITÓRIA" if won else "DERROTA"
+        result_bg = "rgba(35,178,151,.10)" if won else "rgba(210,77,105,.10)"
+        champ = html.escape(str(game["champion"]))
+        enemy = html.escape(str(game["enemy_champion"]))
+        match_id = html.escape(str(game["match_id"]))
+        kda_game = (game["kills"] + game["assists"]) / max(game["deaths"], 1)
+        duration = int(game["duration_min"])
+        cs = int(game["cs"])
+        st.markdown(
+            f'<div class="match-card" style="border-left:4px solid {accent};background:{result_bg}">'
+            f'<div class="match-identity"><img src="https://ddragon.leagueoflegends.com/cdn/15.1.1/img/champion/{quote(champ.replace(" ", ""), safe="")}.png" class="match-icon" onerror="this.style.display=\'none\'">'
+            f'<div><div class="match-result" style="color:{accent}">{result} <span>· {html.escape(str(game["game_mode"]))} · {duration} min</span></div>'
+            f'<div class="match-champion">{champ} <span>vs {enemy}</span></div></div></div>'
+            f'<div class="match-detail"><strong>{game["kills"]} / {game["deaths"]} / {game["assists"]}</strong><span>{kda_game:.2f} KDA</span></div>'
+            f'<div class="match-detail"><strong>{cs} CS</strong><span>{game["cs_per_min"]:.2f} CS/min</span></div>'
+            f'<div class="match-detail"><strong>{game["vision_score"]} visão</strong><span>{fmt(game["gold_per_min"],0)} ouro/min</span></div>'
+            f'<div class="match-id">{match_id}</div></div>',
+            unsafe_allow_html=True,
+        )
 
 
 # Header e área de busca principal
@@ -469,7 +591,7 @@ if data:
         f'{len(route_games)} partida(s) encontradas nesta rota. '
         + (f'Exibindo somente {selected_champion}.' if selected_champion != "Todos os Campeões" else "Exibindo todos os campeões.")
     )
-    render_route_metrics(filtered_games, selected_route)
+    render_route_metrics(filtered_games, selected_route, route_games)
 
     with st.expander("Diagnóstico da consulta"):
         st.write("Partidas válidas por rota:")
