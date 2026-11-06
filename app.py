@@ -27,71 +27,72 @@ ROUTE_NAMES = {
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap');
-:root { color-scheme: dark; }
-.stApp {
-  background: radial-gradient(ellipse at 50% 0%, rgba(24,91,119,.20), transparent 48%),
-              radial-gradient(ellipse at 100% 100%, rgba(13,75,105,.12), transparent 38%), #071321;
-  color: #e8f2f8;
-}
-header[data-testid="stHeader"], #MainMenu, footer {visibility:hidden; height:0;}
-.block-container {padding-top:1.8rem; max-width:1440px;}
-h1,h2,h3 {font-family:'Cinzel',serif !important; color:#e7f7ff !important;}
-p, label, span, div {font-family:'Inter',sans-serif;}
-.hero-title {font-family:'Cinzel',serif; font-size:clamp(2rem,4vw,3.3rem); font-weight:800;
-  letter-spacing:.035em; color:#eaf8ff; text-align:center; margin-bottom:.35rem;}
-.hero-sub {text-align:center;color:#9ab9ca;font-size:.96rem;margin-bottom:1.4rem;}
-.hex-card {
-  background:linear-gradient(145deg,rgba(16,42,62,.92),rgba(8,25,42,.94));
-  border:1px solid rgba(91,190,218,.22); border-radius:16px;
-  padding:18px 20px; box-shadow:0 10px 30px rgba(0,0,0,.18);
-}
-.hex-panel-title {font-family:'Cinzel',serif;color:#d9f2fb;font-size:1.05rem;font-weight:700;margin:.3rem 0 .2rem;}
-.champion-card,.match-card {display:flex;align-items:center;gap:16px;padding:15px 17px;margin:9px 0;
-  border:1px solid rgba(91,190,218,.19);border-radius:14px;background:linear-gradient(120deg,rgba(12,34,53,.92),rgba(8,23,39,.88));
-  box-shadow:0 7px 22px rgba(0,0,0,.14);transition:border-color .2s,transform .2s;}
-.champion-card:hover,.match-card:hover {border-color:rgba(75,207,220,.48);transform:translateY(-1px);}
-.champion-icon,.match-icon {width:52px;height:52px;border-radius:11px;border:1px solid rgba(93,207,220,.45);object-fit:cover;}
+:root {color-scheme:dark;}
+.stApp {background:radial-gradient(ellipse at 50% -8%,rgba(13,111,137,.16),transparent 43%),#06111f;color:#e7f2f8;}
+header[data-testid="stHeader"],#MainMenu,footer,[data-testid="stToolbar"] {visibility:hidden;height:0;}
+.block-container {padding:0 2.5rem 2rem;max-width:1320px;}
+p,label,span,div {font-family:'Inter',sans-serif;}
+h1,h2,h3 {font-family:'Cinzel',serif!important;color:#eaf7fc!important;}
+.topbar {display:flex;justify-content:space-between;align-items:center;padding:15px 0 13px;border-bottom:1px solid rgba(76,173,203,.18);margin-bottom:36px;}
+.brand {display:flex;align-items:center;gap:12px;color:#8de7e9;font-family:'Cinzel',serif;font-size:1.12rem;font-weight:800;letter-spacing:.04em;}
+.brand-mark {width:36px;height:36px;border-radius:9px;display:grid;place-items:center;background:linear-gradient(145deg,#24c9c6,#087ba6);color:#031521;font-family:Inter;font-size:1.15rem;box-shadow:0 5px 16px #00a7b533;}
+.brand small {display:block;font-family:Inter;font-size:.68rem;color:#5e9ab5;font-weight:500;letter-spacing:0;}
+.server-status {font-size:.72rem;color:#91a6b8;white-space:nowrap;}
+.server-status b {color:#36d8b4;font-weight:600;}
+.hero-title {font-family:'Cinzel',serif;font-size:clamp(2rem,4vw,3rem);font-weight:800;letter-spacing:.025em;color:#eaf7fc;text-align:center;margin:0 0 .2rem;}
+.hero-sub {text-align:center;color:#48bde4;font-size:.95rem;line-height:1.55;margin:0 auto 1.45rem;max-width:700px;}
+.search-panel {max-width:680px;margin:0 auto 2.35rem;padding:20px 22px 14px;background:#0a192a;border:1px solid rgba(22,185,197,.28);border-radius:16px;box-shadow:0 12px 34px rgba(0,0,0,.18);}
+.search-panel [data-testid="stTextInput"] input {background:#071322!important;color:#eaf7fc!important;-webkit-text-fill-color:#eaf7fc!important;border:1px solid #1c536d!important;border-radius:11px!important;min-height:3.15rem;font-size:1rem;font-weight:600;}
+.search-panel [data-testid="stTextInput"] input::placeholder {color:#71899b!important;-webkit-text-fill-color:#71899b!important;}
+.search-panel [data-testid="stTextInput"] label {display:none;}
+.search-panel [data-testid="stSlider"] label,.search-panel [data-testid="stSelectbox"] label {color:#9eb2c3!important;font-size:.72rem!important;}
+.search-panel div[data-baseweb="select"]>div {background:#071322!important;border-color:#1c536d!important;}
+.search-panel .stButton>button {background:linear-gradient(110deg,#12a9d5,#08c4c0)!important;color:#031522!important;border:0!important;border-radius:11px!important;font-weight:800!important;min-height:3.15rem;}
+.search-panel .stButton>button:hover {filter:brightness(1.08);}
+.search-panel [data-testid="stExpander"] {border:0!important;}
+.search-panel [data-testid="stExpander"] summary {font-size:.78rem;color:#a7bdca;}
+.profile-panel {display:flex;align-items:center;justify-content:space-between;gap:20px;padding:23px 25px;margin:0 0 30px;background:#0a192a;border:1px solid #16445e;border-radius:16px;position:relative;overflow:hidden;}
+.profile-name {font-size:1.7rem;font-weight:800;color:#f1f8fb;letter-spacing:.01em;}
+.profile-sub {font-size:.82rem;color:#8fa6b7;margin-top:5px;}
+.profile-role {width:78px;height:78px;border:3px solid #20c5bf;border-radius:15px;display:grid;place-items:center;color:#44d7df;font-weight:700;font-size:.78rem;text-align:center;flex-shrink:0;}
+.profile-left {display:flex;align-items:center;gap:19px;min-width:0;}
+.profile-stats {display:flex;align-items:center;justify-content:space-around;gap:22px;padding:13px 20px;background:#071321;border:1px solid #163e58;border-radius:13px;min-width:420px;}
+.profile-stat {text-align:center;min-width:85px;}
+.profile-stat small {display:block;color:#8fa2b5;font-size:.67rem;font-weight:800;letter-spacing:.06em;}
+.profile-stat strong {display:block;color:#38d4c2;font-size:1.45rem;margin:3px 0;}
+.profile-stat span {display:block;color:#637d91;font-size:.65rem;}
+.section-heading {font-family:'Cinzel',serif;color:#e4f3fa;font-size:1.1rem;font-weight:700;letter-spacing:.02em;margin:1.25rem 0 .9rem;}
+.section-note {font-size:.72rem;color:#6fa6c2;text-align:right;}
+.route-grid [data-testid="stRadio"]>div {display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:11px;}
+.route-grid [data-testid="stRadio"] label {margin:0!important;padding:16px 8px!important;min-height:105px;display:flex!important;flex-direction:column;align-items:center;justify-content:center;background:#091727;border:1px solid #163b54;border-radius:13px;cursor:pointer;}
+.route-grid [data-testid="stRadio"] label:has(input:checked) {background:#0b2638;border:1px solid #13c7c2;box-shadow:inset 0 0 0 1px #13c7c233;}
+.route-grid [data-testid="stRadio"] label p {font-size:.82rem;font-weight:700;color:#d2e1e9;margin-top:7px;}
+.route-grid [data-testid="stRadio"] label input {accent-color:#20c9c3;}
+.route-grid [data-testid="stRadio"] label>div:first-child {display:none;}
+.metric-label {font-size:.68rem;color:#8da8ba;text-transform:uppercase;letter-spacing:.07em;font-weight:800;}
+.metric-value {font-size:1.55rem;color:#55d7dc;font-weight:800;margin-top:.18rem;}
+.metric-help {font-size:.7rem;color:#718da1;margin-top:.15rem;}
+.hex-card {background:#0a192a;border:1px solid #153b54;border-radius:13px;padding:14px 16px;box-shadow:none;}
+.hex-panel-title {font-family:'Cinzel',serif;color:#d9edf5;font-size:.95rem;font-weight:700;margin:.3rem 0 .2rem;}
+.section-kicker {color:#55bcd4;font-size:.69rem;text-transform:uppercase;letter-spacing:.12em;font-weight:800;margin-bottom:.5rem;}
+.champion-card,.match-card {display:flex;align-items:center;gap:15px;padding:13px 16px;margin:8px 0;border:1px solid #153b54;border-radius:12px;background:#091827;box-shadow:none;transition:border-color .2s;}
+.champion-card:hover,.match-card:hover {border-color:#1aa9b6;}
+.champion-icon,.match-icon {width:46px;height:46px;border-radius:10px;border:1px solid #23627a;object-fit:cover;}
 .champion-main {flex:1;min-width:120px;}
-.champion-name,.match-champion {font-weight:800;color:#e8f6fc;font-size:1rem;}
-.champion-meta,.match-champion span {font-size:.76rem;color:#8eabba;margin-top:4px;}
-.champion-stat,.match-detail {min-width:90px;text-align:right;display:flex;flex-direction:column;gap:4px;}
-.champion-stat strong,.match-detail strong {font-size:.96rem;color:#d7f2fa;}
-.champion-stat span,.match-detail span {font-size:.7rem;color:#8ca9ba;}
-.match-card {justify-content:space-between;flex-wrap:wrap;padding:15px 18px;}
-.match-identity {display:flex;align-items:center;gap:13px;min-width:220px;flex:1;}
-.match-result {font-size:.72rem;font-weight:800;letter-spacing:.07em;}
-.match-result span {font-weight:500;color:#91aaba;letter-spacing:0;}
-.match-id {font-size:.66rem;color:#67889b;max-width:145px;overflow-wrap:anywhere;text-align:right;}
-@media(max-width:760px){.champion-card,.match-card{gap:10px;}.champion-stat,.match-detail{min-width:70px}.match-id{display:none}.champion-icon,.match-icon{width:43px;height:43px;}}
-.metric-label {font-size:.76rem;color:#9bb8c8;text-transform:uppercase;letter-spacing:.07em;font-weight:700;}
-.metric-value {font-size:1.75rem;color:#bcefff;font-weight:800;margin-top:.2rem;}
-.metric-help {font-size:.78rem;color:#829eaf;margin-top:.15rem;}
-.section-kicker {color:#70c9df;font-size:.76rem;text-transform:uppercase;letter-spacing:.12em;font-weight:800;}
-div[data-baseweb="input"] > div, div[data-baseweb="select"] > div {
-  background:#0a1b2c !important;border-color:#28536b !important;border-radius:10px !important;
-}
-.stTextInput input {
-  color:#102536 !important;
-  -webkit-text-fill-color:#102536 !important;
-  background-color:#f3f8fb !important;
-  caret-color:#102536 !important;
-}
-.stTextInput input::placeholder {
-  color:#647b8b !important;
-  -webkit-text-fill-color:#647b8b !important;
-  opacity:1 !important;
-}
-.stSelectbox div, .stSlider label {color:#e7f7ff !important;}
-.stButton > button {
-  background:linear-gradient(110deg,#287fa7,#3aaeb8) !important;color:#061725 !important;
-  border:1px solid #74d7e8 !important;border-radius:10px !important;font-weight:800 !important;
-  min-height:2.8rem;
-}
-.stButton > button:hover {filter:brightness(1.08);border-color:#b2f0fa !important;}
-div[data-testid="stMetric"] {background:rgba(10,31,49,.78);border:1px solid rgba(91,190,218,.18);
-  padding:14px;border-radius:13px;}
-div[data-testid="stDataFrame"] {border:1px solid rgba(91,190,218,.18);border-radius:12px;}
-hr {border-color:rgba(91,190,218,.18);}
+.champion-name,.match-champion {font-weight:800;color:#e8f6fc;font-size:.93rem;}
+.champion-meta,.match-champion span {font-size:.72rem;color:#829bad;margin-top:4px;}
+.champion-stat,.match-detail {min-width:82px;text-align:right;display:flex;flex-direction:column;gap:4px;}
+.champion-stat strong,.match-detail strong {font-size:.88rem;color:#d7f2fa;}
+.champion-stat span,.match-detail span {font-size:.66rem;color:#829bad;}
+.match-card {justify-content:space-between;flex-wrap:wrap;padding:13px 15px;}
+.match-identity {display:flex;align-items:center;gap:12px;min-width:210px;flex:1;}
+.match-result {font-size:.68rem;font-weight:800;letter-spacing:.07em;}
+.match-result span {font-weight:500;color:#829bad;letter-spacing:0;}
+.match-id {font-size:.62rem;color:#607e92;max-width:140px;overflow-wrap:anywhere;text-align:right;}
+div[data-testid="stMetric"] {background:#091827;border:1px solid #153b54;padding:12px;border-radius:12px;}
+div[data-testid="stDataFrame"] {border:1px solid #153b54;border-radius:12px;}
+hr {border-color:rgba(91,190,218,.16);}
+@media(max-width:850px){.block-container{padding:0 1rem 1.5rem}.profile-panel{align-items:flex-start;flex-direction:column}.profile-stats{min-width:0;width:100%;gap:8px}.route-grid [data-testid="stRadio"]>div{grid-template-columns:repeat(2,minmax(0,1fr))}.server-status{display:none}}
 </style>
 """, unsafe_allow_html=True)
 
@@ -487,36 +488,37 @@ def render_route_metrics(games, route, route_games=None):
         )
 
 
-# Header e área de busca principal
+# Cabeçalho e busca minimalista
+st.markdown(
+    '<div class="topbar"><div class="brand"><div class="brand-mark">▥</div><div>ROTA STATS<small>League Analytics</small></div></div>'
+    '<div class="server-status">● Servidor BR1 &nbsp;&nbsp; Riot Games API Status: <b>Online</b></div></div>',
+    unsafe_allow_html=True,
+)
 st.markdown('<div class="hero-title">ESTATÍSTICAS POR ROTA</div>', unsafe_allow_html=True)
-st.markdown('<div class="hero-sub">League Analytics · Desempenho real nas partidas do Summoner’s Rift</div>', unsafe_allow_html=True)
+st.markdown('<div class="hero-sub">Análise de partidas recentes, métricas de desempenho e taxa de vitória<br>divididas por posição no Summoner’s Rift.</div>', unsafe_allow_html=True)
 
 with st.container():
-    st.markdown('<div class="section-kicker">Consultar invocador</div>', unsafe_allow_html=True)
-    id_col, route_col, count_col = st.columns([2.3, 1.5, 1])
+    st.markdown('<div class="search-panel">', unsafe_allow_html=True)
+    id_col, button_col = st.columns([3.4, 1.1], vertical_alignment="bottom")
     with id_col:
-        riot_id = st.text_input("Riot ID · Nome#TAG", "Tetuz#Tetuz", placeholder="Ex.: Nome#TAG")
-    with route_col:
-        selected_route_label = st.selectbox("Rota para analisar", list(ROUTES.keys()), index=1)
+        riot_id = st.text_input("Riot ID", "Tetuz#Tetuz", placeholder="Nome#TAG", label_visibility="collapsed")
+    with button_col:
+        search_clicked = st.button("⌕  BUSCAR", type="primary", use_container_width=True)
+    count_col, spacer_col = st.columns([1.2, 2.2])
     with count_col:
-        count = st.select_slider("Partidas recentes", options=[10, 20, 30, 40, 50, 75, 100], value=50)
-
+        count = st.select_slider("Partidas recentes", options=[10, 20, 30, 40, 50, 75, 100], value=30)
+    with spacer_col:
+        st.caption("Consulte suas partidas recentes do Summoner’s Rift")
     with st.expander("🔐 Acesso à Riot Games · inserir chave de API", expanded=False):
         riot_key_input = st.text_input(
-            "Chave da Riot",
-            type="password",
-            key="riot_api_key",
+            "Chave da Riot", type="password", key="riot_api_key",
             placeholder="Cole sua chave de API",
             help="A chave fica mascarada na interface. Não a compartilhe nem a publique no GitHub.",
         )
         st.caption("A chave é usada pelo servidor para consultar a Riot API e não é gravada no repositório.")
-
-    search_col, _ = st.columns([1, 3])
-    with search_col:
-        search_clicked = st.button("⚔️  Buscar estatísticas", type="primary", use_container_width=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 key = riot_key_input.strip() or st.secrets.get("RIOT_API_KEY", "")
-selected_route = ROUTES[selected_route_label]
 
 if search_clicked:
     if "#" not in riot_id or not all(part.strip() for part in riot_id.rsplit("#", 1)):
@@ -544,7 +546,7 @@ if search_clicked:
                     detail = match_detail(match_id, key)
                     game = normalize_match(
                         match_id, detail, puuid, key,
-                        include_top_timeline=(selected_route == "TOP"),
+                        include_top_timeline=True,
                     )
                     if game:
                         matches.append(game)
@@ -558,7 +560,6 @@ if search_clicked:
                 "matches": matches,
                 "searched": len(ids),
                 "failed": failed,
-                "route_at_search": selected_route,
             }
     except (RiotAPIError, requests.RequestException, KeyError) as error:
         st.error(f"Não foi possível concluir a consulta: {error}")
@@ -566,41 +567,71 @@ if search_clicked:
 data = st.session_state.get("result")
 if data:
     st.divider()
-    header_left, header_right = st.columns([2, 1])
-    with header_left:
-        st.markdown(f"### {data['name']}")
-        st.caption(f"Elo Solo/Duo: {data['rank']} · Servidor BR1 · Summoner’s Rift")
-    with header_right:
-        st.markdown(f'<div class="hex-card"><div class="metric-label">Partidas verificadas</div><div class="metric-value">{data["searched"]}</div><div class="metric-help">{len(data["matches"])} partidas válidas no Summoner’s Rift</div></div>', unsafe_allow_html=True)
+    all_matches = data["matches"]
+    wins_all = sum(g["win"] for g in all_matches)
+    k_all = total(all_matches, "kills")
+    d_all = total(all_matches, "deaths")
+    a_all = total(all_matches, "assists")
+    all_kda = (k_all + a_all) / max(d_all, 1)
+    all_wr = (100 * wins_all / len(all_matches)) if all_matches else 0
+    st.markdown(
+        f'<div class="profile-panel"><div class="profile-left"><div class="profile-role">Rota<br>Stats</div>'
+        f'<div><div class="profile-name">{data["name"]}</div><div class="profile-sub">Posição principal: <b style="color:#35d5c7">Summoner’s Rift</b> · Elo Solo/Duo: {data["rank"]}</div></div></div>'
+        f'<div class="profile-stats"><div class="profile-stat"><small>WIN RATE</small><strong>{all_wr:.1f}%</strong><span>{wins_all}V / {len(all_matches)-wins_all}D</span></div>'
+        f'<div class="profile-stat"><small>KDA MÉDIO</small><strong style="color:#65caff">{all_kda:.2f}</strong><span>{k_all} / {d_all} / {a_all}</span></div>'
+        f'<div class="profile-stat"><small>PARTIDAS</small><strong style="color:#f2c94c">{len(all_matches)}</strong><span>Summoner’s Rift</span></div></div></div>',
+        unsafe_allow_html=True,
+    )
     if data.get("failed"):
         st.warning(f'{data["failed"]} partida(s) não puderam ser carregadas. As demais foram analisadas normalmente.')
 
-    route_games = [g for g in data["matches"] if g["position"] == selected_route]
+    st.markdown('<div class="section-heading">Desempenho por posição</div>', unsafe_allow_html=True)
+    st.caption("Selecione uma rota para filtrar a análise.")
+    route_labels = list(ROUTES.keys())
+    route_icons = {"TOP":"🛡️", "JUNGLE":"🌲", "MIDDLE":"✦", "BOTTOM":"➤", "UTILITY":"⛨"}
+    route_order = ["JUNGLE", "TOP", "MIDDLE", "BOTTOM", "UTILITY"]
+    route_label_map = {f'{route_icons[r]}  {ROUTE_NAMES[r]}': r for r in route_order}
+    label_values = list(route_label_map.keys())
+    current_route_label = st.session_state.get("active_route_label", label_values[0])
+    if current_route_label not in label_values:
+        current_route_label = label_values[0]
+    st.markdown('<div class="route-grid">', unsafe_allow_html=True)
+    selected_route_label = st.radio(
+        "Rota",
+        label_values,
+        index=label_values.index(current_route_label),
+        horizontal=True,
+        label_visibility="collapsed",
+        key="active_route_label",
+    )
+    st.markdown('</div>', unsafe_allow_html=True)
+    selected_route = route_label_map[selected_route_label]
+    route_games = [g for g in all_matches if g["position"] == selected_route]
+    route_wins = sum(g["win"] for g in route_games)
+    route_wr = 100 * route_wins / len(route_games) if route_games else 0
+    route_k = total(route_games, "kills")
+    route_d = total(route_games, "deaths")
+    route_a = total(route_games, "assists")
+    route_kda = (route_k + route_a) / max(route_d, 1) if route_games else 0
+    st.caption(f'{len(route_games)} partidas · {route_wr:.1f}% de vitória · KDA {route_kda:.2f} · {route_wins} vitórias / {len(route_games)-route_wins} derrotas')
+
     available_champions = sorted({g["champion"] for g in route_games})
     champion_options = ["Todos os Campeões"] + available_champions
-    champ_col, note_col = st.columns([1.2, 2])
+    champ_col, _ = st.columns([1.2, 2])
     with champ_col:
-        selected_champion = st.selectbox("Filtrar por campeão", champion_options, key=f"champion_filter_{selected_route}")
-    if selected_champion != "Todos os Campeões":
-        filtered_games = [g for g in route_games if g["champion"] == selected_champion]
-    else:
-        filtered_games = route_games
-
-    st.markdown(f"### Desempenho · {ROUTE_NAMES[selected_route]}")
-    st.caption(
-        f'{len(route_games)} partida(s) encontradas nesta rota. '
-        + (f'Exibindo somente {selected_champion}.' if selected_champion != "Todos os Campeões" else "Exibindo todos os campeões.")
-    )
+        selected_champion = st.selectbox("Campeão", champion_options, key=f"champion_filter_{selected_route}")
+    filtered_games = route_games if selected_champion == "Todos os Campeões" else [
+        g for g in route_games if g["champion"] == selected_champion
+    ]
     render_route_metrics(filtered_games, selected_route, route_games)
 
     with st.expander("Diagnóstico da consulta"):
-        st.write("Partidas válidas por rota:")
         counts_by_route = {
-            ROUTE_NAMES[route]: sum(g["position"] == route for g in data["matches"])
+            ROUTE_NAMES[route]: sum(g["position"] == route for g in all_matches)
             for route in ROUTE_NAMES
         }
         st.json(counts_by_route)
-        st.write(f'Partidas solicitadas: {data["searched"]} · Partidas válidas em Summoner’s Rift: {len(data["matches"])} · Falhas: {data["failed"]}')
+        st.write(f'Partidas solicitadas: {data["searched"]} · Partidas válidas em Summoner’s Rift: {len(all_matches)} · Falhas: {data["failed"]}')
 
 st.markdown(
     '<div style="text-align:center;color:#66869a;font-size:.75rem;padding:2rem 0 1rem;">'
