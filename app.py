@@ -51,7 +51,18 @@ p, label, span, div {font-family:'Inter',sans-serif;}
 div[data-baseweb="input"] > div, div[data-baseweb="select"] > div {
   background:#0a1b2c !important;border-color:#28536b !important;border-radius:10px !important;
 }
-.stTextInput input, .stSelectbox div, .stSlider label {color:#e7f7ff !important;}
+.stTextInput input {
+  color:#102536 !important;
+  -webkit-text-fill-color:#102536 !important;
+  background-color:#f3f8fb !important;
+  caret-color:#102536 !important;
+}
+.stTextInput input::placeholder {
+  color:#647b8b !important;
+  -webkit-text-fill-color:#647b8b !important;
+  opacity:1 !important;
+}
+.stSelectbox div, .stSlider label {color:#e7f7ff !important;}
 .stButton > button {
   background:linear-gradient(110deg,#287fa7,#3aaeb8) !important;color:#061725 !important;
   border:1px solid #74d7e8 !important;border-radius:10px !important;font-weight:800 !important;
