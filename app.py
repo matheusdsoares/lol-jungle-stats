@@ -10,6 +10,18 @@ ACCOUNT_REGION = "americas"
 PLATFORM_REGION = "br1"
 MATCH_REGION = "americas"
 
+# Oculta o botão nativo de revelar senha apenas no campo da chave Riot.
+st.markdown(
+    """
+    <style>
+    .st-key-riot_api_key button {
+        display: none !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
 
 class RiotAPIError(Exception):
     pass
@@ -89,21 +101,23 @@ st.caption("Estatísticas das suas partidas na selva com dados oficiais da Riot 
 with st.sidebar:
     st.header("Configurações")
     riot_id = st.text_input("Riot ID", "Tetuz#Tetuz")
-    riot_key_input = st.text_input(
-        "Riot API Key",
-        type="password",
-        placeholder="Cole sua chave da Riot aqui",
-        help="A chave fica mascarada na tela e é mantida apenas durante esta sessão do aplicativo.",
-    )
+    with st.expander("Acesso à Riot Games", expanded=False):
+        riot_key_input = st.text_input(
+            "Chave de API",
+            type="password",
+            key="riot_api_key",
+            placeholder="Cole sua chave aqui",
+            help="A chave permanece mascarada e é usada apenas para consultar a API.",
+        )
+        st.caption("Sua chave não é exibida nem salva no GitHub.")
     count = st.slider("Partidas recentes a consultar", 10, 100, 30, 10)
     st.caption("A análise considera partidas recentes de todos os modos e filtra as que registram sua posição como JUNGLE.")
-    st.caption("Sua chave não é exibida na tela nem salva no GitHub.")
 
 # Permite usar a chave digitada no app. Se o campo estiver vazio, usa o Secret
 # já configurado no Streamlit, caso exista.
 key = riot_key_input.strip() or st.secrets.get("RIOT_API_KEY", "")
 if not key:
-    st.info("Cole sua Riot API Key no campo acima para consultar suas partidas.")
+    st.info("Abra «Acesso à Riot Games» na barra lateral e informe sua chave para consultar as partidas.")
     st.stop()
 
 if st.button("🔎 Buscar estatísticas", type="primary", use_container_width=True):
