@@ -41,15 +41,15 @@ h1,h2,h3 {font-family:'Cinzel',serif!important;color:#eaf7fc!important;}
 .server-status b {color:#36d8b4;font-weight:600;}
 .hero-title {font-family:'Cinzel',serif;font-size:clamp(2rem,4vw,3rem);font-weight:800;letter-spacing:.025em;color:#eaf7fc;text-align:center;margin:0 0 .2rem;}
 .hero-sub {text-align:center;color:#48bde4;font-size:.95rem;line-height:1.55;margin:0 auto 1.45rem;max-width:700px;}
-.search-panel {max-width:680px;margin:0 auto 2.35rem;padding:20px 22px 14px;background:#0a192a;border:1px solid rgba(22,185,197,.28);border-radius:16px;box-shadow:0 12px 34px rgba(0,0,0,.18);}
-.search-panel [data-testid="stTextInput"] input {background:#071322!important;color:#eaf7fc!important;-webkit-text-fill-color:#eaf7fc!important;border:1px solid #1c536d!important;border-radius:11px!important;min-height:3.15rem;font-size:1rem;font-weight:600;}
-.search-panel [data-testid="stTextInput"] input::placeholder {color:#71899b!important;-webkit-text-fill-color:#71899b!important;}
-.search-panel [data-testid="stTextInput"] label {display:none;}
-.search-panel [data-testid="stSlider"] label,.search-panel [data-testid="stSelectbox"] label {color:#9eb2c3!important;font-size:.72rem!important;}
-.search-panel div[data-baseweb="select"]>div {background:#071322!important;border-color:#1c536d!important;}
-.search-panel .stButton>button {background:linear-gradient(110deg,#12a9d5,#08c4c0)!important;color:#031522!important;border:0!important;border-radius:11px!important;font-weight:800!important;min-height:3.15rem;}
+.st-key-search_panel {max-width:680px;margin:0 auto 2.35rem;padding:20px 22px 14px;background:#0a192a;border:1px solid rgba(22,185,197,.28);border-radius:16px;box-shadow:0 12px 34px rgba(0,0,0,.18);}
+.st-key-search_panel [data-testid="stTextInput"] input {background:#071322!important;color:#eaf7fc!important;-webkit-text-fill-color:#eaf7fc!important;border:1px solid #1c536d!important;border-radius:11px!important;min-height:3.15rem;font-size:1rem;font-weight:600;}
+.st-key-search_panel [data-testid="stTextInput"] input::placeholder {color:#71899b!important;-webkit-text-fill-color:#71899b!important;}
+.st-key-search_panel [data-testid="stTextInput"] label {display:none;}
+.st-key-search_panel [data-testid="stSlider"] label,.st-key-search_panel [data-testid="stSelectbox"] label {color:#9eb2c3!important;font-size:.72rem!important;}
+.st-key-search_panel div[data-baseweb="select"]>div {background:#071322!important;border-color:#1c536d!important;}
+.st-key-search_panel .stButton>button {background:linear-gradient(110deg,#12a9d5,#08c4c0)!important;color:#031522!important;border:0!important;border-radius:11px!important;font-weight:800!important;min-height:3.15rem;}
 .search-panel .stButton>button:hover {filter:brightness(1.08);}
-.search-panel [data-testid="stExpander"] {border:0!important;}
+.st-key-search_panel [data-testid="stExpander"] {border:0!important;}
 .search-panel [data-testid="stExpander"] summary {font-size:.78rem;color:#a7bdca;}
 .profile-panel {display:flex;align-items:center;justify-content:space-between;gap:20px;padding:23px 25px;margin:0 0 30px;background:#0a192a;border:1px solid #16445e;border-radius:16px;position:relative;overflow:hidden;}
 .profile-name {font-size:1.7rem;font-weight:800;color:#f1f8fb;letter-spacing:.01em;}
@@ -63,7 +63,7 @@ h1,h2,h3 {font-family:'Cinzel',serif!important;color:#eaf7fc!important;}
 .profile-stat span {display:block;color:#637d91;font-size:.65rem;}
 .section-heading {font-family:'Cinzel',serif;color:#e4f3fa;font-size:1.1rem;font-weight:700;letter-spacing:.02em;margin:1.25rem 0 .9rem;}
 .section-note {font-size:.72rem;color:#6fa6c2;text-align:right;}
-.route-grid [data-testid="stRadio"]>div {display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:11px;}
+.st-key-route_grid [data-testid="stRadio"]>div {display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:11px;}
 .route-grid [data-testid="stRadio"] label {margin:0!important;padding:16px 8px!important;min-height:105px;display:flex!important;flex-direction:column;align-items:center;justify-content:center;background:#091727;border:1px solid #163b54;border-radius:13px;cursor:pointer;}
 .route-grid [data-testid="stRadio"] label:has(input:checked) {background:#0b2638;border:1px solid #13c7c2;box-shadow:inset 0 0 0 1px #13c7c233;}
 .route-grid [data-testid="stRadio"] label p {font-size:.82rem;font-weight:700;color:#d2e1e9;margin-top:7px;}
@@ -497,8 +497,7 @@ st.markdown(
 st.markdown('<div class="hero-title">ESTATÍSTICAS POR ROTA</div>', unsafe_allow_html=True)
 st.markdown('<div class="hero-sub">Análise de partidas recentes, métricas de desempenho e taxa de vitória<br>divididas por posição no Summoner’s Rift.</div>', unsafe_allow_html=True)
 
-with st.container():
-    st.markdown('<div class="search-panel">', unsafe_allow_html=True)
+with st.container(key="search_panel"):
     id_col, button_col = st.columns([3.4, 1.1], vertical_alignment="bottom")
     with id_col:
         riot_id = st.text_input("Riot ID", "Tetuz#Tetuz", placeholder="Nome#TAG", label_visibility="collapsed")
@@ -516,7 +515,6 @@ with st.container():
             help="A chave fica mascarada na interface. Não a compartilhe nem a publique no GitHub.",
         )
         st.caption("A chave é usada pelo servidor para consultar a Riot API e não é gravada no repositório.")
-    st.markdown('</div>', unsafe_allow_html=True)
 
 key = riot_key_input.strip() or st.secrets.get("RIOT_API_KEY", "")
 
@@ -595,16 +593,15 @@ if data:
     current_route_label = st.session_state.get("active_route_label", label_values[0])
     if current_route_label not in label_values:
         current_route_label = label_values[0]
-    st.markdown('<div class="route-grid">', unsafe_allow_html=True)
-    selected_route_label = st.radio(
+    with st.container(key="route_grid"):
+        selected_route_label = st.radio(
         "Rota",
         label_values,
         index=label_values.index(current_route_label),
         horizontal=True,
         label_visibility="collapsed",
-        key="active_route_label",
-    )
-    st.markdown('</div>', unsafe_allow_html=True)
+            key="active_route_label",
+        )
     selected_route = route_label_map[selected_route_label]
     route_games = [g for g in all_matches if g["position"] == selected_route]
     route_wins = sum(g["win"] for g in route_games)
