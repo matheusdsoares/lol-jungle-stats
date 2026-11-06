@@ -40,8 +40,12 @@ def account_lookup(name, tag, key):
 
 @st.cache_data(ttl=600)
 def rank_lookup(puuid, key):
-    s = riot_get(f"https://{PLATFORM_REGION}.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{puuid}", key)
-    entries = riot_get(f"https://{PLATFORM_REGION}.api.riotgames.com/lol/league/v4/entries/by-summoner/{s['id']}", key)
+    # Desde julho de 2025, a Riot removeu Summoner IDs das respostas.
+    # Por isso, consulte League-V4 diretamente pelo PUUID.
+    entries = riot_get(
+        f"https://{PLATFORM_REGION}.api.riotgames.com/lol/league/v4/entries/by-puuid/{puuid}",
+        key,
+    )
     solo = next((x for x in entries if x.get("queueType") == "RANKED_SOLO_5x5"), None)
     if not solo:
         return "Unranked"
@@ -110,24 +114,31 @@ if st.button("🔎 Buscar estatísticas", type="primary", use_container_width=Tr
         ids = match_ids(puuid, count, key)
         champs, enemies = {}, {}
         progress = st.progress(0)
+        failed_matches = 0
+        positions = {}
         for i, mid in enumerate(ids, 1):
             try:
                 info = match_detail(mid, key).get("info", {})
             except (RiotAPIError, requests.RequestException):
+                failed_matches += 1
                 progress.progress(i / max(len(ids), 1))
                 continue
             participants = info.get("participants", [])
             me = next((p for p in participants if p.get("puuid") == puuid), None)
-            if me and me.get("individualPosition") == "JUNGLE":
-                add_game(champs, me.get("championName", "Desconhecido"), me)
-                enemy = next((p for p in participants if p.get("teamId") != me.get("teamId") and p.get("individualPosition") == "JUNGLE"), None)
-                if enemy:
-                    add_game(enemies, enemy.get("championName", "Desconhecido"), me)
+            if me:
+                position = me.get("individualPosition", "SEM_DADO")
+                positions[position] = positions.get(position, 0) + 1
+                if position == "JUNGLE":
+                    add_game(champs, me.get("championName", "Desconhecido"), me)
+                    enemy = next((p for p in participants if p.get("teamId") != me.get("teamId") and p.get("individualPosition") == "JUNGLE"), None)
+                    if enemy:
+                        add_game(enemies, enemy.get("championName", "Desconhecido"), me)
             progress.progress(i / max(len(ids), 1))
         progress.empty()
         st.session_state["result"] = {
             "name": f"{account.get('gameName', name)}#{account.get('tagLine', tag)}",
-            "rank": rank, "champs": champs, "enemies": enemies, "searched": len(ids)
+            "rank": rank, "champs": champs, "enemies": enemies, "searched": len(ids),
+            "failed_matches": failed_matches, "positions": positions,
         }
     except (RiotAPIError, requests.RequestException, KeyError) as e:
         st.error(f"Não foi possível concluir a consulta: {e}")
@@ -141,6 +152,11 @@ if data:
     a2 = sum(x["games"] for x in data["champs"].values())
     b.metric("Partidas identificadas na JG", a2)
     c.metric("Campeões utilizados", len(data["champs"]))
+    if data.get("failed_matches", 0):
+        st.warning(f"{data['failed_matches']} partida(s) não puderam ser carregadas pela API.")
+    with st.expander("Diagnóstico da consulta"):
+        st.write("Posições identificadas nas partidas:")
+        st.json(data.get("positions", {}))
     st.subheader("📊 Desempenho por campeão")
     df = to_frame(data["champs"], "Seu campeão")
     if df.empty:
