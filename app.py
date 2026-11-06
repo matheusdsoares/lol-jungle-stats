@@ -40,8 +40,7 @@ def account_lookup(name, tag, key):
 
 @st.cache_data(ttl=600)
 def rank_lookup(puuid, key):
-    # Desde julho de 2025, a Riot removeu Summoner IDs das respostas.
-    # Por isso, consulte League-V4 diretamente pelo PUUID.
+    # League-V4 é consultada diretamente pelo PUUID.
     entries = riot_get(
         f"https://{PLATFORM_REGION}.api.riotgames.com/lol/league/v4/entries/by-puuid/{puuid}",
         key,
@@ -90,12 +89,21 @@ st.caption("Estatísticas das suas partidas na selva com dados oficiais da Riot 
 with st.sidebar:
     st.header("Configurações")
     riot_id = st.text_input("Riot ID", "Tetuz#Tetuz")
+    riot_key_input = st.text_input(
+        "Riot API Key",
+        type="password",
+        placeholder="Cole sua chave da Riot aqui",
+        help="A chave fica mascarada na tela e é mantida apenas durante esta sessão do aplicativo.",
+    )
     count = st.slider("Partidas recentes a consultar", 10, 100, 30, 10)
     st.caption("A análise considera partidas recentes de todos os modos e filtra as que registram sua posição como JUNGLE.")
+    st.caption("Sua chave não é exibida na tela nem salva no GitHub.")
 
-key = st.secrets.get("RIOT_API_KEY", "")
+# Permite usar a chave digitada no app. Se o campo estiver vazio, usa o Secret
+# já configurado no Streamlit, caso exista.
+key = riot_key_input.strip() or st.secrets.get("RIOT_API_KEY", "")
 if not key:
-    st.warning('Configure RIOT_API_KEY nos Secrets do Streamlit: RIOT_API_KEY = "SUA_CHAVE".')
+    st.info("Cole sua Riot API Key no campo acima para consultar suas partidas.")
     st.stop()
 
 if st.button("🔎 Buscar estatísticas", type="primary", use_container_width=True):
