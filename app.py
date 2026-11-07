@@ -605,19 +605,6 @@ if data:
 
     st.markdown('<div class="section-heading">Desempenho por posição</div>', unsafe_allow_html=True)
     st.caption("Selecione uma rota para visualizar seu desempenho e histórico.")
-    route_meta = {
-        "TOP": {"icon": "🛡️", "subtitle": "Topo", "description": "Duelos e pressão lateral"},
-        "JUNGLE": {"icon": "🌲", "subtitle": "Selva", "description": "Controle do mapa e objetivos"},
-        "MIDDLE": {"icon": "✦", "subtitle": "Meio", "description": "Pressão central e rotações"},
-        "BOTTOM": {"icon": "⌖", "subtitle": "Atirador", "description": "Farm, dano e estruturas"},
-        "UTILITY": {"icon": "⬡", "subtitle": "Suporte", "description": "Visão e proteção da equipe"},
-    }
-    route_order = ["TOP", "JUNGLE", "MIDDLE", "BOTTOM", "UTILITY"]
-    if "active_route" not in st.session_state:
-        st.session_state["active_route"] = "JUNGLE"
-    if st.session_state["active_route"] not in route_order:
-        st.session_state["active_route"] = "JUNGLE"
-
     route_columns = st.columns(5, gap="small")
     route_meta = {
         "TOP": {"icon": "🛡️", "subtitle": "Topo", "description": "Duelos e pressão lateral"},
