@@ -64,29 +64,6 @@ h1,h2,h3 {font-family:'Cinzel',serif!important;color:#eaf7fc!important;}
 .profile-stat span {display:block;color:#637d91;font-size:.65rem;}
 .section-heading {font-family:'Cinzel',serif;color:#e4f3fa;font-size:1.1rem;font-weight:700;letter-spacing:.02em;margin:1.25rem 0 .9rem;}
 .route-grid {display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;align-items:stretch;margin:.4rem 0 1rem;}
-.route-card {height:100%;min-height:250px;box-sizing:border-box;padding:17px 16px 14px;background:linear-gradient(160deg,#0c2032,#091827);border:1px solid #19445d;border-radius:16px;display:flex;flex-direction:column;position:relative;transition:border-color .18s,background .18s,transform .18s;box-shadow:0 6px 18px rgba(0,0,0,.12);}
-.route-card.active {background:linear-gradient(160deg,#0d2d40,#0a2637);border:1.5px solid #13c9c1;box-shadow:inset 0 0 0 1px rgba(19,201,193,.15),0 7px 20px rgba(0,180,190,.08);}
-.route-card:hover {border-color:#27869b;}
-.route-card-head {display:flex;align-items:center;gap:12px;min-height:58px;}
-.route-icon-box {width:58px;height:58px;flex-shrink:0;border:1px solid #26748b;background:#0b293b;border-radius:12px;display:grid;place-items:center;color:#5bdbe1;font-size:1.75rem;}
-.route-card.active .route-icon-box {background:#0b3844;border-color:#20c9c2;}
-.route-code {font-size:.9rem;font-weight:800;color:#e7f3f8;letter-spacing:.02em;}
-.route-subtitle {font-size:.72rem;color:#83a4b7;margin-top:4px;}
-.route-description {color:#87a3b5;font-size:.72rem;line-height:1.4;margin:22px 0 14px;min-height:30px;}
-.route-separator {height:1px;background:#1a4056;margin-bottom:15px;}
-.route-card-stats {display:grid;grid-template-columns:1fr 1.25fr .8fr;gap:7px;}
-.route-stat-value {display:block;color:#47d8c5;font-size:1.02rem;font-weight:800;white-space:nowrap;}
-.route-stat-value.negative {color:#ee8c9f;}
-.route-stat-label {display:block;color:#7895a8;font-size:.56rem;font-weight:700;letter-spacing:.04em;margin-top:4px;}
-.st-key-route_card_top,.st-key-route_card_jungle,.st-key-route_card_middle,.st-key-route_card_bottom,.st-key-route_card_utility {position:relative;min-height:250px;}
-.st-key-route_card_top [data-testid="stButton"],.st-key-route_card_jungle [data-testid="stButton"],.st-key-route_card_middle [data-testid="stButton"],.st-key-route_card_bottom [data-testid="stButton"],.st-key-route_card_utility [data-testid="stButton"] {position:absolute;inset:0;z-index:8;margin:0;height:100%;}
-.st-key-route_card_top [data-testid="stButton"] button,.st-key-route_card_jungle [data-testid="stButton"] button,.st-key-route_card_middle [data-testid="stButton"] button,.st-key-route_card_bottom [data-testid="stButton"] button,.st-key-route_card_utility [data-testid="stButton"] button {position:absolute;inset:0;width:100%;height:100%;min-height:0!important;opacity:0!important;padding:0!important;border:0!important;background:transparent!important;cursor:pointer;}
-.st-key-route_card_top [data-testid="stButton"] button:focus-visible,.st-key-route_card_jungle [data-testid="stButton"] button:focus-visible,.st-key-route_card_middle [data-testid="stButton"] button:focus-visible,.st-key-route_card_bottom [data-testid="stButton"] button:focus-visible,.st-key-route_card_utility [data-testid="stButton"] button:focus-visible {opacity:.06!important;outline:3px solid #51e3dc!important;outline-offset:-4px;}
-.route-card-action {margin-top:auto;padding-top:16px;text-align:center;color:#6f9cb0;font-size:.63rem;font-weight:800;letter-spacing:.04em;}
-.route-card.active .route-card-action {padding:9px 5px 8px;color:#54e0d8;background:rgba(15,184,180,.13);border:1px solid rgba(28,205,197,.55);border-radius:9px;}
-.route-click-target {position:absolute;inset:0;z-index:3;}
-.route-click-target button {position:absolute;inset:0;width:100%;height:100%;min-height:0!important;opacity:0;padding:0!important;border:0!important;background:transparent!important;cursor:pointer;}
-.route-click-target button:focus-visible {opacity:.05;outline:3px solid #51e3dc!important;outline-offset:-4px;}
 .metric-label {font-size:.68rem;color:#8da8ba;text-transform:uppercase;letter-spacing:.07em;font-weight:800;}
 .metric-value {font-size:1.55rem;color:#55d7dc;font-weight:800;margin-top:.18rem;}
 .metric-help {font-size:.7rem;color:#718da1;margin-top:.15rem;}
@@ -113,6 +90,17 @@ hr {border-color:rgba(91,190,218,.16);}
 @media(max-width:1050px){.route-grid{grid-template-columns:repeat(3,minmax(0,1fr));}}
 @media(max-width:760px){.block-container{padding:0 1rem 1.5rem}.profile-panel{align-items:flex-start;flex-direction:column}.profile-stats{min-width:0;width:100%;gap:8px}.route-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.route-card{min-height:225px;padding:13px 12px}.route-icon-box{width:48px;height:48px;font-size:1.45rem}.route-stat-label{font-size:.52rem}.server-status{display:none}}
 @media(max-width:390px){.route-grid{grid-template-columns:1fr}.route-card{min-height:210px}}
+.st-key-route_selector [role="radiogroup"] {display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;width:100%;}
+.st-key-route_selector [role="radiogroup"]>label {box-sizing:border-box;margin:0!important;min-height:232px;padding:18px 16px!important;display:flex!important;align-items:flex-start!important;justify-content:flex-start!important;flex-direction:column!important;gap:8px;background:linear-gradient(160deg,#0c2032,#091827);border:1px solid #19445d;border-radius:16px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.12);transition:border-color .18s,background .18s,transform .18s;}
+.st-key-route_selector [role="radiogroup"]>label:hover {border-color:#27869b;background:#0d2437;transform:translateY(-2px);}
+.st-key-route_selector [role="radiogroup"]>label:has(input:checked) {background:linear-gradient(160deg,#0d2d40,#0a2637);border:1.5px solid #13c9c1;box-shadow:inset 0 0 0 1px rgba(19,201,193,.15),0 7px 20px rgba(0,180,190,.08);}
+.st-key-route_selector [role="radiogroup"]>label p {color:#d8eaf1!important;font-size:.82rem!important;line-height:1.5!important;margin:0!important;white-space:pre-line;}
+.st-key-route_selector [role="radiogroup"]>label:has(input:checked) p {color:#e8fbff!important;}
+.st-key-route_selector [role="radiogroup"]>label p strong {color:#55dcd3!important;font-weight:800;}
+.st-key-route_selector [role="radiogroup"]>label input {accent-color:#20c9c3;}
+@media(max-width:1050px){.st-key-route_selector [role="radiogroup"]{grid-template-columns:repeat(3,minmax(0,1fr));}}
+@media(max-width:760px){.st-key-route_selector [role="radiogroup"]{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;}.st-key-route_selector [role="radiogroup"]>label{min-height:205px;padding:15px 12px!important;}}
+@media(max-width:390px){.st-key-route_selector [role="radiogroup"]{grid-template-columns:1fr;}.st-key-route_selector [role="radiogroup"]>label{min-height:180px;}}
 </style>
 """, unsafe_allow_html=True)
 
@@ -604,8 +592,8 @@ if data:
         st.warning(f'{data["failed"]} partida(s) não puderam ser carregadas. As demais foram analisadas normalmente.')
 
     st.markdown('<div class="section-heading">Desempenho por posição</div>', unsafe_allow_html=True)
-    st.caption("Selecione uma rota para visualizar seu desempenho e histórico.")
-    route_columns = st.columns(5, gap="small")
+    st.caption("Selecione um card para visualizar o desempenho e o histórico daquela rota.")
+    route_order = ["TOP", "JUNGLE", "MIDDLE", "BOTTOM", "UTILITY"]
     route_meta = {
         "TOP": {"icon": "🛡️", "subtitle": "Topo", "description": "Duelos e pressão lateral"},
         "JUNGLE": {"icon": "🌲", "subtitle": "Selva", "description": "Controle do mapa e objetivos"},
@@ -613,11 +601,8 @@ if data:
         "BOTTOM": {"icon": "⌖", "subtitle": "Atirador", "description": "Farm, dano e estruturas"},
         "UTILITY": {"icon": "⬡", "subtitle": "Suporte", "description": "Visão e proteção da equipe"},
     }
-    route_order = ["TOP", "JUNGLE", "MIDDLE", "BOTTOM", "UTILITY"]
-    if "active_route" not in st.session_state or st.session_state["active_route"] not in route_order:
-        st.session_state["active_route"] = "JUNGLE"
 
-    for column, route in zip(route_columns, route_order):
+    def route_card_label(route):
         route_matches = [g for g in all_matches if g["position"] == route]
         route_wins_count = sum(g["win"] for g in route_matches)
         route_wr = 100 * route_wins_count / len(route_matches) if route_matches else None
@@ -626,32 +611,31 @@ if data:
         route_assists = total(route_matches, "assists")
         route_kda = (route_kills + route_assists) / max(route_deaths, 1) if route_matches else None
         meta = route_meta[route]
-        active = route == st.session_state["active_route"]
-        wr_color = "negative" if route_wr is not None and route_wr < 50 else ""
         games_text = str(len(route_matches))
         wr_text = fmt(route_wr, 1, "%") if route_wr is not None else "—"
         kda_text = fmt(route_kda, 2) if route_kda is not None else "—"
-        action_text = "ROTA SELECIONADA" if active else "ANALISAR ROTA  →"
-        card_html = (
-            f'<div class="route-card{" active" if active else ""}">'
-            f'<div class="route-card-head"><div class="route-icon-box">{meta["icon"]}</div>'
-            f'<div><div class="route-code">{route}</div><div class="route-subtitle">{meta["subtitle"]}</div></div></div>'
-            f'<div class="route-description">{meta["description"]}</div>'
-            f'<div class="route-separator"></div>'
-            f'<div class="route-card-stats">'
-            f'<div><span class="route-stat-value">{games_text}</span><span class="route-stat-label">PARTIDAS</span></div>'
-            f'<div><span class="route-stat-value {wr_color}">{wr_text}</span><span class="route-stat-label">WIN RATE</span></div>'
-            f'<div><span class="route-stat-value">{kda_text}</span><span class="route-stat-label">KDA</span></div>'
-            f'</div><div class="route-card-action">{action_text}</div></div>'
+        return (
+            f'{meta["icon"]}  **{route}**  \n'
+            f'{meta["subtitle"]}  \n'
+            f'{meta["description"]}  \n\n'
+            f'**{games_text}** PARTIDAS   ·   **{wr_text}** WIN RATE  \n'
+            f'**{kda_text}** KDA'
         )
-        with column:
-            with st.container(key=f"route_card_{route.lower()}"):
-                st.markdown(card_html, unsafe_allow_html=True)
-                if st.button(f"Selecionar rota {route}", key=f"select_route_{route.lower()}"):
-                    st.session_state["active_route"] = route
-                    st.rerun()
 
-    selected_route = st.session_state["active_route"]
+    if "active_route" not in st.session_state or st.session_state["active_route"] not in route_order:
+        st.session_state["active_route"] = "JUNGLE"
+
+    with st.container(key="route_selector"):
+        selected_route = st.radio(
+            "Selecionar rota",
+            options=route_order,
+            index=route_order.index(st.session_state["active_route"]),
+            format_func=route_card_label,
+            horizontal=True,
+            label_visibility="collapsed",
+            key="active_route",
+        )
+
     route_games = [g for g in all_matches if g["position"] == selected_route]
     route_wins = sum(g["win"] for g in route_games)
     route_wr = 100 * route_wins / len(route_games) if route_games else 0
@@ -670,14 +654,6 @@ if data:
         g for g in route_games if g["champion"] == selected_champion
     ]
     render_route_metrics(filtered_games, selected_route, route_games)
-
-    with st.expander("Diagnóstico da consulta"):
-        counts_by_route = {
-            ROUTE_NAMES[route]: sum(g["position"] == route for g in all_matches)
-            for route in ROUTE_NAMES
-        }
-        st.json(counts_by_route)
-        st.write(f'Partidas solicitadas: {data["searched"]} · Partidas válidas em Summoner’s Rift: {len(all_matches)} · Falhas: {data["failed"]}')
 
 st.markdown(
     '<div style="text-align:center;color:#66869a;font-size:.75rem;padding:2rem 0 1rem;">'
