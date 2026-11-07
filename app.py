@@ -90,17 +90,36 @@ hr {border-color:rgba(91,190,218,.16);}
 @media(max-width:1050px){.route-grid{grid-template-columns:repeat(3,minmax(0,1fr));}}
 @media(max-width:760px){.block-container{padding:0 1rem 1.5rem}.profile-panel{align-items:flex-start;flex-direction:column}.profile-stats{min-width:0;width:100%;gap:8px}.route-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.route-card{min-height:225px;padding:13px 12px}.route-icon-box{width:48px;height:48px;font-size:1.45rem}.route-stat-label{font-size:.52rem}.server-status{display:none}}
 @media(max-width:390px){.route-grid{grid-template-columns:1fr}.route-card{min-height:210px}}
-.st-key-route_selector [role="radiogroup"] {display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;width:100%;}
-.st-key-route_selector [role="radiogroup"]>label {box-sizing:border-box;margin:0!important;min-height:232px;padding:18px 16px!important;display:flex!important;align-items:flex-start!important;justify-content:flex-start!important;flex-direction:column!important;gap:8px;background:linear-gradient(160deg,#0c2032,#091827);border:1px solid #19445d;border-radius:16px;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.12);transition:border-color .18s,background .18s,transform .18s;}
-.st-key-route_selector [role="radiogroup"]>label:hover {border-color:#27869b;background:#0d2437;transform:translateY(-2px);}
-.st-key-route_selector [role="radiogroup"]>label:has(input:checked) {background:linear-gradient(160deg,#0d2d40,#0a2637);border:1.5px solid #13c9c1;box-shadow:inset 0 0 0 1px rgba(19,201,193,.15),0 7px 20px rgba(0,180,190,.08);}
-.st-key-route_selector [role="radiogroup"]>label p {color:#d8eaf1!important;font-size:.82rem!important;line-height:1.5!important;margin:0!important;white-space:pre-line;}
-.st-key-route_selector [role="radiogroup"]>label:has(input:checked) p {color:#e8fbff!important;}
-.st-key-route_selector [role="radiogroup"]>label p strong {color:#55dcd3!important;font-weight:800;}
-.st-key-route_selector [role="radiogroup"]>label input {accent-color:#20c9c3;}
-@media(max-width:1050px){.st-key-route_selector [role="radiogroup"]{grid-template-columns:repeat(3,minmax(0,1fr));}}
-@media(max-width:760px){.st-key-route_selector [role="radiogroup"]{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;}.st-key-route_selector [role="radiogroup"]>label{min-height:205px;padding:15px 12px!important;}}
-@media(max-width:390px){.st-key-route_selector [role="radiogroup"]{grid-template-columns:1fr;}.st-key-route_selector [role="radiogroup"]>label{min-height:180px;}}
+
+.st-key-route_card_top,.st-key-route_card_jungle,.st-key-route_card_middle,.st-key-route_card_bottom,.st-key-route_card_utility,
+.st-key-route_card_top_active,.st-key-route_card_jungle_active,.st-key-route_card_middle_active,.st-key-route_card_bottom_active,.st-key-route_card_utility_active {height:100%;}
+.st-key-route_card_top .stButton>button,.st-key-route_card_jungle .stButton>button,.st-key-route_card_middle .stButton>button,.st-key-route_card_bottom .stButton>button,.st-key-route_card_utility .stButton>button,
+.st-key-route_card_top_active .stButton>button,.st-key-route_card_jungle_active .stButton>button,.st-key-route_card_middle_active .stButton>button,.st-key-route_card_bottom_active .stButton>button,.st-key-route_card_utility_active .stButton>button {
+  width:100%;height:248px;min-height:248px!important;padding:18px 16px!important;display:flex;align-items:flex-start;justify-content:flex-start;text-align:left;white-space:pre-line;
+  background:linear-gradient(160deg,#0c2032,#091827)!important;border:1px solid #19445d!important;border-radius:16px!important;color:#dcebf2!important;
+  box-shadow:0 6px 18px rgba(0,0,0,.12);transition:border-color .18s,background .18s,transform .18s;
+}
+.st-key-route_card_top .stButton>button:hover,.st-key-route_card_jungle .stButton>button:hover,.st-key-route_card_middle .stButton>button:hover,.st-key-route_card_bottom .stButton>button:hover,.st-key-route_card_utility .stButton>button:hover,
+.st-key-route_card_top_active .stButton>button:hover,.st-key-route_card_jungle_active .stButton>button:hover,.st-key-route_card_middle_active .stButton>button:hover,.st-key-route_card_bottom_active .stButton>button:hover,.st-key-route_card_utility_active .stButton>button:hover {border-color:#27869b!important;background:#0d2437!important;}
+.st-key-route_card_top_active .stButton>button,.st-key-route_card_jungle_active .stButton>button,.st-key-route_card_middle_active .stButton>button,.st-key-route_card_bottom_active .stButton>button,.st-key-route_card_utility_active .stButton>button {
+  background:linear-gradient(160deg,#0d2d40,#0a2637)!important;border:1.5px solid #13c9c1!important;
+  box-shadow:inset 0 0 0 1px rgba(19,201,193,.15),0 7px 20px rgba(0,180,190,.08);color:#effdff!important;
+}
+.st-key-route_card_top .stButton>button p,.st-key-route_card_jungle .stButton>button p,.st-key-route_card_middle .stButton>button p,.st-key-route_card_bottom .stButton>button p,.st-key-route_card_utility .stButton>button p,
+.st-key-route_card_top_active .stButton>button p,.st-key-route_card_jungle_active .stButton>button p,.st-key-route_card_middle_active .stButton>button p,.st-key-route_card_bottom_active .stButton>button p,.st-key-route_card_utility_active .stButton>button p {
+  font-size:.82rem!important;line-height:1.5!important;text-align:left!important;white-space:pre-line!important;margin:0!important;color:inherit!important;
+}
+.st-key-route_card_top_active .stButton>button p,.st-key-route_card_jungle_active .stButton>button p,.st-key-route_card_middle_active .stButton>button p,.st-key-route_card_bottom_active .stButton>button p,.st-key-route_card_utility_active .stButton>button p {color:#e8fbff!important;}
+@media(max-width:1050px) {
+  .st-key-route_card_top .stButton>button,.st-key-route_card_jungle .stButton>button,.st-key-route_card_middle .stButton>button,.st-key-route_card_bottom .stButton>button,.st-key-route_card_utility .stButton>button,
+  .st-key-route_card_top_active .stButton>button,.st-key-route_card_jungle_active .stButton>button,.st-key-route_card_middle_active .stButton>button,.st-key-route_card_bottom_active .stButton>button,.st-key-route_card_utility_active .stButton>button {height:230px;min-height:230px!important;padding:15px 12px!important;}
+}
+@media(max-width:760px) {
+  .block-container{padding:0 1rem 1.5rem}
+  .profile-panel{align-items:flex-start;flex-direction:column}
+  .profile-stats{min-width:0;width:100%;gap:8px}
+  .server-status{display:none}
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -593,6 +612,7 @@ if data:
 
     st.markdown('<div class="section-heading">Desempenho por posição</div>', unsafe_allow_html=True)
     st.caption("Selecione um card para visualizar o desempenho e o histórico daquela rota.")
+
     route_order = ["TOP", "JUNGLE", "MIDDLE", "BOTTOM", "UTILITY"]
     route_meta = {
         "TOP": {"icon": "🛡️", "subtitle": "Topo", "description": "Duelos e pressão lateral"},
@@ -601,8 +621,11 @@ if data:
         "BOTTOM": {"icon": "⌖", "subtitle": "Atirador", "description": "Farm, dano e estruturas"},
         "UTILITY": {"icon": "⬡", "subtitle": "Suporte", "description": "Visão e proteção da equipe"},
     }
+    if "active_route" not in st.session_state or st.session_state["active_route"] not in route_order:
+        st.session_state["active_route"] = "JUNGLE"
 
-    def route_card_label(route):
+    route_columns = st.columns(5, gap="small")
+    for column, route in zip(route_columns, route_order):
         route_matches = [g for g in all_matches if g["position"] == route]
         route_wins_count = sum(g["win"] for g in route_matches)
         route_wr = 100 * route_wins_count / len(route_matches) if route_matches else None
@@ -614,27 +637,26 @@ if data:
         games_text = str(len(route_matches))
         wr_text = fmt(route_wr, 1, "%") if route_wr is not None else "—"
         kda_text = fmt(route_kda, 2) if route_kda is not None else "—"
-        return (
-            f'{meta["icon"]}  **{route}**  \n'
-            f'{meta["subtitle"]}  \n'
-            f'{meta["description"]}  \n\n'
-            f'**{games_text}** PARTIDAS   ·   **{wr_text}** WIN RATE  \n'
-            f'**{kda_text}** KDA'
+        card_label = (
+            f'{meta["icon"]}  **{route} · {meta["subtitle"]}**\n\n'
+            f'{meta["description"]}\n\n'
+            f'**{games_text}** PARTIDAS   ·   **{wr_text}** WIN RATE\n\n'
+            f'**KDA {kda_text}**'
         )
+        active = route == st.session_state["active_route"]
+        container_key = f'route_card_{route.lower()}{"_active" if active else ""}'
+        with column:
+            with st.container(key=container_key):
+                if st.button(
+                    card_label,
+                    key=f"select_route_{route.lower()}",
+                    type="primary" if active else "secondary",
+                    use_container_width=True,
+                ):
+                    st.session_state["active_route"] = route
+                    st.rerun()
 
-    if "active_route" not in st.session_state or st.session_state["active_route"] not in route_order:
-        st.session_state["active_route"] = "JUNGLE"
-
-    with st.container(key="route_selector"):
-        selected_route = st.radio(
-            "Selecionar rota",
-            options=route_order,
-            index=route_order.index(st.session_state["active_route"]),
-            format_func=route_card_label,
-            horizontal=True,
-            label_visibility="collapsed",
-            key="active_route",
-        )
+    selected_route = st.session_state["active_route"]
 
     route_games = [g for g in all_matches if g["position"] == selected_route]
     route_wins = sum(g["win"] for g in route_games)
