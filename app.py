@@ -63,12 +63,16 @@ h1,h2,h3 {font-family:'Cinzel',serif!important;color:#eaf7fc!important;}
 .profile-stat span {display:block;color:#637d91;font-size:.65rem;}
 .section-heading {font-family:'Cinzel',serif;color:#e4f3fa;font-size:1.1rem;font-weight:700;letter-spacing:.02em;margin:1.25rem 0 .9rem;}
 .section-note {font-size:.72rem;color:#6fa6c2;text-align:right;}
-.st-key-route_grid [data-testid="stRadio"]>div {display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:11px;}
-.route-grid [data-testid="stRadio"] label {margin:0!important;padding:16px 8px!important;min-height:105px;display:flex!important;flex-direction:column;align-items:center;justify-content:center;background:#091727;border:1px solid #163b54;border-radius:13px;cursor:pointer;}
-.route-grid [data-testid="stRadio"] label:has(input:checked) {background:#0b2638;border:1px solid #13c7c2;box-shadow:inset 0 0 0 1px #13c7c233;}
-.route-grid [data-testid="stRadio"] label p {font-size:.82rem;font-weight:700;color:#d2e1e9;margin-top:7px;}
-.route-grid [data-testid="stRadio"] label input {accent-color:#20c9c3;}
-.route-grid [data-testid="stRadio"] label>div:first-child {display:none;}
+.st-key-route_grid [data-testid="stRadio"]>div {display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;width:100%;}
+.st-key-route_grid [data-testid="stRadio"] label {box-sizing:border-box;margin:0!important;padding:20px 12px!important;min-height:132px;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:9px;background:linear-gradient(145deg,#0b1c2e,#081625);border:1px solid #19445d;border-radius:15px;cursor:pointer;transition:background .18s ease,border-color .18s ease,transform .18s ease;box-shadow:0 5px 14px rgba(0,0,0,.12);}
+.st-key-route_grid [data-testid="stRadio"] label:hover {border-color:#26829a;background:#0d2437;transform:translateY(-2px);}
+.st-key-route_grid [data-testid="stRadio"] label:has(input:checked) {background:linear-gradient(145deg,#0c3042,#0b2638);border:1.5px solid #19c9c2;box-shadow:inset 0 0 0 1px rgba(25,201,194,.16),0 6px 18px rgba(0,180,190,.10);}
+.st-key-route_grid [data-testid="stRadio"] label p {font-size:.9rem!important;font-weight:700!important;color:#d9eaf1!important;margin:0!important;text-align:center;line-height:1.3;}
+.st-key-route_grid [data-testid="stRadio"] label:has(input:checked) p {color:#5de0dc!important;}
+.st-key-route_grid [data-testid="stRadio"] label input {accent-color:#20c9c3;}
+.st-key-route_grid [data-testid="stRadio"] label>div:first-child {display:none;}
+@media(max-width:1050px){.st-key-route_grid [data-testid="stRadio"]>div {grid-template-columns:repeat(3,minmax(0,1fr));}}
+@media(max-width:600px){.st-key-route_grid [data-testid="stRadio"]>div {grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}.st-key-route_grid [data-testid="stRadio"] label{min-height:112px;padding:15px 8px!important;}}
 .metric-label {font-size:.68rem;color:#8da8ba;text-transform:uppercase;letter-spacing:.07em;font-weight:800;}
 .metric-value {font-size:1.55rem;color:#55d7dc;font-weight:800;margin-top:.18rem;}
 .metric-help {font-size:.7rem;color:#718da1;margin-top:.15rem;}
