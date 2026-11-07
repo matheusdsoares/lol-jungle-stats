@@ -45,12 +45,13 @@ h1,h2,h3 {font-family:'Cinzel',serif!important;color:#eaf7fc!important;}
 .st-key-search_panel [data-testid="stTextInput"] input {background:#071322!important;color:#eaf7fc!important;-webkit-text-fill-color:#eaf7fc!important;border:1px solid #1c536d!important;border-radius:11px!important;min-height:3.15rem;font-size:1rem;font-weight:600;}
 .st-key-search_panel [data-testid="stTextInput"] input::placeholder {color:#71899b!important;-webkit-text-fill-color:#71899b!important;}
 .st-key-search_panel [data-testid="stTextInput"] label {display:none;}
-.st-key-search_panel [data-testid="stSlider"] label,.st-key-search_panel [data-testid="stSelectbox"] label {color:#9eb2c3!important;font-size:.72rem!important;}
+.st-key-search_panel [data-testid="stSlider"] label {color:#9eb2c3!important;font-size:.72rem!important;}
+.st-key-search_panel .stSelectSlider label {color:#9eb2c3!important;font-size:.72rem!important;}
 .st-key-search_panel div[data-baseweb="select"]>div {background:#071322!important;border-color:#1c536d!important;}
 .st-key-search_panel .stButton>button {background:linear-gradient(110deg,#12a9d5,#08c4c0)!important;color:#031522!important;border:0!important;border-radius:11px!important;font-weight:800!important;min-height:3.15rem;}
-.search-panel .stButton>button:hover {filter:brightness(1.08);}
+.st-key-search_panel .stButton>button:hover {filter:brightness(1.08);}
 .st-key-search_panel [data-testid="stExpander"] {border:0!important;}
-.search-panel [data-testid="stExpander"] summary {font-size:.78rem;color:#a7bdca;}
+.st-key-search_panel [data-testid="stExpander"] summary {font-size:.78rem;color:#a7bdca;}
 .profile-panel {display:flex;align-items:center;justify-content:space-between;gap:20px;padding:23px 25px;margin:0 0 30px;background:#0a192a;border:1px solid #16445e;border-radius:16px;position:relative;overflow:hidden;}
 .profile-name {font-size:1.7rem;font-weight:800;color:#f1f8fb;letter-spacing:.01em;}
 .profile-sub {font-size:.82rem;color:#8fa6b7;margin-top:5px;}
@@ -62,17 +63,26 @@ h1,h2,h3 {font-family:'Cinzel',serif!important;color:#eaf7fc!important;}
 .profile-stat strong {display:block;color:#38d4c2;font-size:1.45rem;margin:3px 0;}
 .profile-stat span {display:block;color:#637d91;font-size:.65rem;}
 .section-heading {font-family:'Cinzel',serif;color:#e4f3fa;font-size:1.1rem;font-weight:700;letter-spacing:.02em;margin:1.25rem 0 .9rem;}
-.section-note {font-size:.72rem;color:#6fa6c2;text-align:right;}
-.st-key-route_grid [data-testid="stRadio"]>div {display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;width:100%;}
-.st-key-route_grid [data-testid="stRadio"] label {box-sizing:border-box;margin:0!important;padding:20px 12px!important;min-height:132px;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:9px;background:linear-gradient(145deg,#0b1c2e,#081625);border:1px solid #19445d;border-radius:15px;cursor:pointer;transition:background .18s ease,border-color .18s ease,transform .18s ease;box-shadow:0 5px 14px rgba(0,0,0,.12);}
-.st-key-route_grid [data-testid="stRadio"] label:hover {border-color:#26829a;background:#0d2437;transform:translateY(-2px);}
-.st-key-route_grid [data-testid="stRadio"] label:has(input:checked) {background:linear-gradient(145deg,#0c3042,#0b2638);border:1.5px solid #19c9c2;box-shadow:inset 0 0 0 1px rgba(25,201,194,.16),0 6px 18px rgba(0,180,190,.10);}
-.st-key-route_grid [data-testid="stRadio"] label p {font-size:.9rem!important;font-weight:700!important;color:#d9eaf1!important;margin:0!important;text-align:center;line-height:1.3;}
-.st-key-route_grid [data-testid="stRadio"] label:has(input:checked) p {color:#5de0dc!important;}
-.st-key-route_grid [data-testid="stRadio"] label input {accent-color:#20c9c3;}
-.st-key-route_grid [data-testid="stRadio"] label>div:first-child {display:none;}
-@media(max-width:1050px){.st-key-route_grid [data-testid="stRadio"]>div {grid-template-columns:repeat(3,minmax(0,1fr));}}
-@media(max-width:600px){.st-key-route_grid [data-testid="stRadio"]>div {grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}.st-key-route_grid [data-testid="stRadio"] label{min-height:112px;padding:15px 8px!important;}}
+.route-grid {display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;align-items:stretch;margin:.4rem 0 1rem;}
+.route-card {height:100%;min-height:250px;box-sizing:border-box;padding:17px 16px 14px;background:linear-gradient(160deg,#0c2032,#091827);border:1px solid #19445d;border-radius:16px;display:flex;flex-direction:column;position:relative;transition:border-color .18s,background .18s,transform .18s;box-shadow:0 6px 18px rgba(0,0,0,.12);}
+.route-card.active {background:linear-gradient(160deg,#0d2d40,#0a2637);border:1.5px solid #13c9c1;box-shadow:inset 0 0 0 1px rgba(19,201,193,.15),0 7px 20px rgba(0,180,190,.08);}
+.route-card:hover {border-color:#27869b;}
+.route-card-head {display:flex;align-items:center;gap:12px;min-height:58px;}
+.route-icon-box {width:58px;height:58px;flex-shrink:0;border:1px solid #26748b;background:#0b293b;border-radius:12px;display:grid;place-items:center;color:#5bdbe1;font-size:1.75rem;}
+.route-card.active .route-icon-box {background:#0b3844;border-color:#20c9c2;}
+.route-code {font-size:.9rem;font-weight:800;color:#e7f3f8;letter-spacing:.02em;}
+.route-subtitle {font-size:.72rem;color:#83a4b7;margin-top:4px;}
+.route-description {color:#87a3b5;font-size:.72rem;line-height:1.4;margin:22px 0 14px;min-height:30px;}
+.route-separator {height:1px;background:#1a4056;margin-bottom:15px;}
+.route-card-stats {display:grid;grid-template-columns:1fr 1.25fr .8fr;gap:7px;}
+.route-stat-value {display:block;color:#47d8c5;font-size:1.02rem;font-weight:800;white-space:nowrap;}
+.route-stat-value.negative {color:#ee8c9f;}
+.route-stat-label {display:block;color:#7895a8;font-size:.56rem;font-weight:700;letter-spacing:.04em;margin-top:4px;}
+.route-card-action {margin-top:auto;padding-top:16px;text-align:center;color:#6f9cb0;font-size:.63rem;font-weight:800;letter-spacing:.04em;}
+.route-card.active .route-card-action {padding:9px 5px 8px;color:#54e0d8;background:rgba(15,184,180,.13);border:1px solid rgba(28,205,197,.55);border-radius:9px;}
+.route-click-target {position:absolute;inset:0;z-index:3;}
+.route-click-target button {position:absolute;inset:0;width:100%;height:100%;min-height:0!important;opacity:0;padding:0!important;border:0!important;background:transparent!important;cursor:pointer;}
+.route-click-target button:focus-visible {opacity:.05;outline:3px solid #51e3dc!important;outline-offset:-4px;}
 .metric-label {font-size:.68rem;color:#8da8ba;text-transform:uppercase;letter-spacing:.07em;font-weight:800;}
 .metric-value {font-size:1.55rem;color:#55d7dc;font-weight:800;margin-top:.18rem;}
 .metric-help {font-size:.7rem;color:#718da1;margin-top:.15rem;}
@@ -96,7 +106,9 @@ h1,h2,h3 {font-family:'Cinzel',serif!important;color:#eaf7fc!important;}
 div[data-testid="stMetric"] {background:#091827;border:1px solid #153b54;padding:12px;border-radius:12px;}
 div[data-testid="stDataFrame"] {border:1px solid #153b54;border-radius:12px;}
 hr {border-color:rgba(91,190,218,.16);}
-@media(max-width:850px){.block-container{padding:0 1rem 1.5rem}.profile-panel{align-items:flex-start;flex-direction:column}.profile-stats{min-width:0;width:100%;gap:8px}.route-grid [data-testid="stRadio"]>div{grid-template-columns:repeat(2,minmax(0,1fr))}.server-status{display:none}}
+@media(max-width:1050px){.route-grid{grid-template-columns:repeat(3,minmax(0,1fr));}}
+@media(max-width:760px){.block-container{padding:0 1rem 1.5rem}.profile-panel{align-items:flex-start;flex-direction:column}.profile-stats{min-width:0;width:100%;gap:8px}.route-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.route-card{min-height:225px;padding:13px 12px}.route-icon-box{width:48px;height:48px;font-size:1.45rem}.route-stat-label{font-size:.52rem}.server-status{display:none}}
+@media(max-width:390px){.route-grid{grid-template-columns:1fr}.route-card{min-height:210px}}
 </style>
 """, unsafe_allow_html=True)
 
@@ -588,25 +600,65 @@ if data:
         st.warning(f'{data["failed"]} partida(s) não puderam ser carregadas. As demais foram analisadas normalmente.')
 
     st.markdown('<div class="section-heading">Desempenho por posição</div>', unsafe_allow_html=True)
-    st.caption("Selecione uma rota para filtrar a análise.")
-    route_labels = list(ROUTES.keys())
-    route_icons = {"TOP":"🛡️", "JUNGLE":"🌲", "MIDDLE":"✦", "BOTTOM":"➤", "UTILITY":"⛨"}
-    route_order = ["JUNGLE", "TOP", "MIDDLE", "BOTTOM", "UTILITY"]
-    route_label_map = {f'{route_icons[r]}  {ROUTE_NAMES[r]}': r for r in route_order}
-    label_values = list(route_label_map.keys())
-    current_route_label = st.session_state.get("active_route_label", label_values[0])
-    if current_route_label not in label_values:
-        current_route_label = label_values[0]
-    with st.container(key="route_grid"):
-        selected_route_label = st.radio(
-        "Rota",
-        label_values,
-        index=label_values.index(current_route_label),
-        horizontal=True,
-        label_visibility="collapsed",
-            key="active_route_label",
+    st.caption("Selecione uma rota para visualizar seu desempenho e histórico.")
+    route_meta = {
+        "TOP": {"icon": "🛡️", "subtitle": "Topo", "description": "Duelos e pressão lateral"},
+        "JUNGLE": {"icon": "🌲", "subtitle": "Selva", "description": "Controle do mapa e objetivos"},
+        "MIDDLE": {"icon": "✦", "subtitle": "Meio", "description": "Pressão central e rotações"},
+        "BOTTOM": {"icon": "⌖", "subtitle": "Atirador", "description": "Farm, dano e estruturas"},
+        "UTILITY": {"icon": "⬡", "subtitle": "Suporte", "description": "Visão e proteção da equipe"},
+    }
+    route_order = ["TOP", "JUNGLE", "MIDDLE", "BOTTOM", "UTILITY"]
+    if "active_route" not in st.session_state:
+        st.session_state["active_route"] = "JUNGLE"
+    if st.session_state["active_route"] not in route_order:
+        st.session_state["active_route"] = "JUNGLE"
+
+    import html as html_lib
+    import streamlit.components.v1 as components
+    cards_html = ['<div class="route-grid">']
+    for route in route_order:
+        route_matches = [g for g in all_matches if g["position"] == route]
+        route_wins_count = sum(g["win"] for g in route_matches)
+        route_wr = 100 * route_wins_count / len(route_matches) if route_matches else None
+        route_kills = total(route_matches, "kills")
+        route_deaths = total(route_matches, "deaths")
+        route_assists = total(route_matches, "assists")
+        route_kda = (route_kills + route_assists) / max(route_deaths, 1) if route_matches else None
+        meta = route_meta[route]
+        active = route == st.session_state["active_route"]
+        wr_color = "negative" if route_wr is not None and route_wr < 50 else ""
+        games_text = str(len(route_matches))
+        wr_text = fmt(route_wr, 1, "%") if route_wr is not None else "—"
+        kda_text = fmt(route_kda, 2) if route_kda is not None else "—"
+        action_text = "ROTA SELECIONADA" if active else "ANALISAR ROTA  →"
+        cards_html.append(
+            f'<div class="route-card{" active" if active else ""}">'
+            f'<div class="route-card-head"><div class="route-icon-box">{meta["icon"]}</div>'
+            f'<div><div class="route-code">{route}</div><div class="route-subtitle">{meta["subtitle"]}</div></div></div>'
+            f'<div class="route-description">{meta["description"]}</div>'
+            f'<div class="route-separator"></div>'
+            f'<div class="route-card-stats">'
+            f'<div><span class="route-stat-value">{games_text}</span><span class="route-stat-label">PARTIDAS</span></div>'
+            f'<div><span class="route-stat-value {wr_color}">{wr_text}</span><span class="route-stat-label">WIN RATE</span></div>'
+            f'<div><span class="route-stat-value">{kda_text}</span><span class="route-stat-label">KDA</span></div>'
+            f'</div><div class="route-card-action">{action_text}</div></div>'
         )
-    selected_route = route_label_map[selected_route_label]
+    cards_html.append("</div>")
+    st.markdown("".join(cards_html), unsafe_allow_html=True)
+
+    route_columns = st.columns(5, gap="small")
+    for column, route in zip(route_columns, route_order):
+        with column:
+            if st.button(
+                f"Selecionar rota {route}",
+                key=f"select_route_{route.lower()}",
+                use_container_width=True,
+            ):
+                st.session_state["active_route"] = route
+                st.rerun()
+
+    selected_route = st.session_state["active_route"]
     route_games = [g for g in all_matches if g["position"] == selected_route]
     route_wins = sum(g["win"] for g in route_games)
     route_wr = 100 * route_wins / len(route_games) if route_games else 0
