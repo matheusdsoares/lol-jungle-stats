@@ -78,6 +78,10 @@ h1,h2,h3 {font-family:'Cinzel',serif!important;color:#eaf7fc!important;}
 .route-stat-value {display:block;color:#47d8c5;font-size:1.02rem;font-weight:800;white-space:nowrap;}
 .route-stat-value.negative {color:#ee8c9f;}
 .route-stat-label {display:block;color:#7895a8;font-size:.56rem;font-weight:700;letter-spacing:.04em;margin-top:4px;}
+.st-key-route_card_top,.st-key-route_card_jungle,.st-key-route_card_middle,.st-key-route_card_bottom,.st-key-route_card_utility {position:relative;min-height:250px;}
+.st-key-route_card_top [data-testid="stButton"],.st-key-route_card_jungle [data-testid="stButton"],.st-key-route_card_middle [data-testid="stButton"],.st-key-route_card_bottom [data-testid="stButton"],.st-key-route_card_utility [data-testid="stButton"] {position:absolute;inset:0;z-index:8;margin:0;height:100%;}
+.st-key-route_card_top [data-testid="stButton"] button,.st-key-route_card_jungle [data-testid="stButton"] button,.st-key-route_card_middle [data-testid="stButton"] button,.st-key-route_card_bottom [data-testid="stButton"] button,.st-key-route_card_utility [data-testid="stButton"] button {position:absolute;inset:0;width:100%;height:100%;min-height:0!important;opacity:0!important;padding:0!important;border:0!important;background:transparent!important;cursor:pointer;}
+.st-key-route_card_top [data-testid="stButton"] button:focus-visible,.st-key-route_card_jungle [data-testid="stButton"] button:focus-visible,.st-key-route_card_middle [data-testid="stButton"] button:focus-visible,.st-key-route_card_bottom [data-testid="stButton"] button:focus-visible,.st-key-route_card_utility [data-testid="stButton"] button:focus-visible {opacity:.06!important;outline:3px solid #51e3dc!important;outline-offset:-4px;}
 .route-card-action {margin-top:auto;padding-top:16px;text-align:center;color:#6f9cb0;font-size:.63rem;font-weight:800;letter-spacing:.04em;}
 .route-card.active .route-card-action {padding:9px 5px 8px;color:#54e0d8;background:rgba(15,184,180,.13);border:1px solid rgba(28,205,197,.55);border-radius:9px;}
 .route-click-target {position:absolute;inset:0;z-index:3;}
@@ -614,10 +618,19 @@ if data:
     if st.session_state["active_route"] not in route_order:
         st.session_state["active_route"] = "JUNGLE"
 
-    import html as html_lib
-    import streamlit.components.v1 as components
-    cards_html = ['<div class="route-grid">']
-    for route in route_order:
+    route_columns = st.columns(5, gap="small")
+    route_meta = {
+        "TOP": {"icon": "🛡️", "subtitle": "Topo", "description": "Duelos e pressão lateral"},
+        "JUNGLE": {"icon": "🌲", "subtitle": "Selva", "description": "Controle do mapa e objetivos"},
+        "MIDDLE": {"icon": "✦", "subtitle": "Meio", "description": "Pressão central e rotações"},
+        "BOTTOM": {"icon": "⌖", "subtitle": "Atirador", "description": "Farm, dano e estruturas"},
+        "UTILITY": {"icon": "⬡", "subtitle": "Suporte", "description": "Visão e proteção da equipe"},
+    }
+    route_order = ["TOP", "JUNGLE", "MIDDLE", "BOTTOM", "UTILITY"]
+    if "active_route" not in st.session_state or st.session_state["active_route"] not in route_order:
+        st.session_state["active_route"] = "JUNGLE"
+
+    for column, route in zip(route_columns, route_order):
         route_matches = [g for g in all_matches if g["position"] == route]
         route_wins_count = sum(g["win"] for g in route_matches)
         route_wr = 100 * route_wins_count / len(route_matches) if route_matches else None
@@ -632,7 +645,7 @@ if data:
         wr_text = fmt(route_wr, 1, "%") if route_wr is not None else "—"
         kda_text = fmt(route_kda, 2) if route_kda is not None else "—"
         action_text = "ROTA SELECIONADA" if active else "ANALISAR ROTA  →"
-        cards_html.append(
+        card_html = (
             f'<div class="route-card{" active" if active else ""}">'
             f'<div class="route-card-head"><div class="route-icon-box">{meta["icon"]}</div>'
             f'<div><div class="route-code">{route}</div><div class="route-subtitle">{meta["subtitle"]}</div></div></div>'
@@ -644,19 +657,12 @@ if data:
             f'<div><span class="route-stat-value">{kda_text}</span><span class="route-stat-label">KDA</span></div>'
             f'</div><div class="route-card-action">{action_text}</div></div>'
         )
-    cards_html.append("</div>")
-    st.markdown("".join(cards_html), unsafe_allow_html=True)
-
-    route_columns = st.columns(5, gap="small")
-    for column, route in zip(route_columns, route_order):
         with column:
-            if st.button(
-                f"Selecionar rota {route}",
-                key=f"select_route_{route.lower()}",
-                use_container_width=True,
-            ):
-                st.session_state["active_route"] = route
-                st.rerun()
+            with st.container(key=f"route_card_{route.lower()}"):
+                st.markdown(card_html, unsafe_allow_html=True)
+                if st.button(f"Selecionar rota {route}", key=f"select_route_{route.lower()}"):
+                    st.session_state["active_route"] = route
+                    st.rerun()
 
     selected_route = st.session_state["active_route"]
     route_games = [g for g in all_matches if g["position"] == selected_route]
